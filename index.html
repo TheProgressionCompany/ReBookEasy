@@ -806,6 +806,56 @@
     @media (max-width: 600px) {
       .btn-sec-orange, .btn-sec-white { width: 100%; text-align: center; padding: 18px 24px; font-size: 16px; }
     }
+
+    /* ── EXIT INTENT MODAL ────────────────── */
+    .exit-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55); z-index: 500;
+      align-items: center; justify-content: center; padding: 24px;
+    }
+    .exit-overlay.open { display: flex; }
+    .exit-box {
+      background: #fff; border-radius: 24px;
+      width: 100%; max-width: 680px;
+      overflow: hidden; display: grid;
+      grid-template-columns: 1fr 1fr;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+      animation: modalBounceIn 0.5s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    .exit-left {
+      padding: 44px 36px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .exit-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      color: var(--orange); text-transform: uppercase; margin-bottom: 16px;
+    }
+    .exit-headline {
+      font-size: 26px; font-weight: 800; color: var(--black);
+      letter-spacing: -1px; line-height: 1.1; margin-bottom: 16px;
+    }
+    .exit-body {
+      font-size: 14px; color: #666; line-height: 1.7; margin-bottom: 28px;
+    }
+    .exit-cta {
+      background: var(--orange); color: #fff; border: none;
+      border-radius: 12px; padding: 16px 24px;
+      font-size: 16px; font-weight: 800; cursor: pointer;
+      font-family: inherit; margin-bottom: 12px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: var(--shadow-orange);
+    }
+    .exit-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,103,26,0.4); }
+    .exit-dismiss {
+      font-size: 12px; color: #bbb; text-align: center;
+      cursor: pointer; background: none; border: none;
+      font-family: inherit; transition: color 0.15s;
+    }
+    .exit-dismiss:hover { color: #999; }
+    .exit-right {
+      background: var(--orange-light);
+      display: flex; align-items: center; justify-content: center; padding: 28px;
+    }
     @media (prefers-reduced-motion: reduce) {
       .sms-card-1, .sms-card-2, .sms-card-3, .ticker-track, .h-ring, .f-ring { animation: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
@@ -1566,6 +1616,47 @@
   if (calcLapsed) { calcLapsed.addEventListener('input', calcLoss); }
   calcLoss();
 
+  /* ── Exit Intent ── */
+  document.addEventListener('DOMContentLoaded', function() {
+    var shown = false;
+    var dismissed = false;
+    var overlay = document.getElementById('exit-overlay');
+    var exitCta = document.getElementById('exit-cta');
+    var exitDismiss = document.getElementById('exit-dismiss');
+
+    if (!overlay) return;
+
+    function showExit() {
+      if (!shown && !dismissed) {
+        shown = true;
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    function closeExit() {
+      dismissed = true;
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('mouseleave', function(e) {
+      if (e.clientY <= 10) showExit();
+    });
+
+    if (exitCta) exitCta.addEventListener('click', function() {
+      closeExit();
+      var heroBtn = document.querySelector('.btn-hero-main');
+      if (heroBtn) heroBtn.click();
+    });
+    if (exitDismiss) exitDismiss.addEventListener('click', closeExit);
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeExit();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeExit();
+    });
+  });
+
   /* ── Legal modals ── */
   function openLegal(overlayId) {
     document.getElementById(overlayId).classList.add('open');
@@ -1590,6 +1681,79 @@
 
 
 
+
+
+<!-- EXIT INTENT MODAL -->
+<div class="exit-overlay" id="exit-overlay">
+  <div class="exit-box">
+    <div class="exit-left">
+      <div class="exit-eyebrow">Before You Go</div>
+      <div class="exit-headline">How many customers haven't come back this month?</div>
+      <div class="exit-body">ReBookEasy brings them back automatically. No chasing. No awkward texts. Just customers returning.</div>
+      <button class="exit-cta" id="exit-cta">Start Free — No Credit Card</button>
+      <button class="exit-dismiss" id="exit-dismiss">No thanks, I'll keep losing customers</button>
+    </div>
+    <div class="exit-right">
+      <svg width="100%" viewBox="0 0 280 300" role="img" xmlns="http://www.w3.org/2000/svg">
+        <title>Empty calendar illustration</title>
+        <desc>A calendar showing mostly empty slots with ghost bookings representing customers who never came back</desc>
+        <rect x="20" y="20" width="240" height="260" rx="14" fill="#fff" stroke="#fad4bc" stroke-width="1.5"/>
+        <rect x="20" y="20" width="240" height="48" rx="14" fill="#E8671A" opacity="0.12"/>
+        <rect x="20" y="52" width="240" height="16" fill="#E8671A" opacity="0.12"/>
+        <text x="140" y="51" text-anchor="middle" font-size="13" font-weight="800" fill="#E8671A" font-family="sans-serif">July 2026</text>
+        <text x="46" y="82" text-anchor="middle" font-size="10" fill="#bbb" font-family="sans-serif">M</text>
+        <text x="80" y="82" text-anchor="middle" font-size="10" fill="#bbb" font-family="sans-serif">T</text>
+        <text x="114" y="82" text-anchor="middle" font-size="10" fill="#bbb" font-family="sans-serif">W</text>
+        <text x="148" y="82" text-anchor="middle" font-size="10" fill="#bbb" font-family="sans-serif">T</text>
+        <text x="182" y="82" text-anchor="middle" font-size="10" fill="#bbb" font-family="sans-serif">F</text>
+        <text x="216" y="82" text-anchor="middle" font-size="10" fill="#bbb" font-family="sans-serif">S</text>
+        <text x="250" y="82" text-anchor="middle" font-size="10" fill="#bbb" font-family="sans-serif">S</text>
+        <text x="46" y="112" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">1</text>
+        <text x="80" y="112" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">2</text>
+        <text x="114" y="112" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">3</text>
+        <text x="148" y="112" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">4</text>
+        <text x="182" y="112" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">5</text>
+        <text x="216" y="112" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">6</text>
+        <text x="250" y="112" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">7</text>
+        <rect x="28" y="118" width="36" height="14" rx="4" fill="#E8671A" opacity="0.12" stroke="#E8671A" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <rect x="62" y="118" width="36" height="14" rx="4" fill="#E8671A" opacity="0.08" stroke="#E8671A" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <text x="46" y="148" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">8</text>
+        <text x="80" y="148" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">9</text>
+        <text x="114" y="148" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">10</text>
+        <text x="148" y="148" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">11</text>
+        <text x="182" y="148" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">12</text>
+        <text x="216" y="148" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">13</text>
+        <text x="250" y="148" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">14</text>
+        <rect x="96" y="154" width="36" height="14" rx="4" fill="#E8671A" opacity="0.1" stroke="#E8671A" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <rect x="164" y="154" width="36" height="14" rx="4" fill="#E8671A" opacity="0.08" stroke="#E8671A" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <rect x="198" y="154" width="36" height="14" rx="4" fill="#E8671A" opacity="0.12" stroke="#E8671A" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <text x="46" y="184" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">15</text>
+        <text x="80" y="184" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">16</text>
+        <text x="114" y="184" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">17</text>
+        <text x="148" y="184" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">18</text>
+        <text x="182" y="184" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">19</text>
+        <text x="216" y="184" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">20</text>
+        <text x="250" y="184" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">21</text>
+        <rect x="28" y="190" width="36" height="14" rx="4" fill="#E8671A" opacity="0.08" stroke="#E8671A" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <rect x="130" y="190" width="36" height="14" rx="4" fill="#E8671A" opacity="0.1" stroke="#E8671A" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <text x="46" y="220" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">22</text>
+        <text x="80" y="220" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">23</text>
+        <text x="114" y="220" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">24</text>
+        <text x="148" y="220" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">25</text>
+        <text x="182" y="220" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">26</text>
+        <text x="216" y="220" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">27</text>
+        <text x="250" y="220" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">28</text>
+        <rect x="62" y="226" width="36" height="14" rx="4" fill="#E8671A" opacity="0.12" stroke="#E8671A" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <rect x="232" y="226" width="36" height="14" rx="4" fill="#E8671A" opacity="0.08" stroke="#E8671A" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <text x="46" y="256" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">29</text>
+        <text x="80" y="256" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">30</text>
+        <text x="114" y="256" text-anchor="middle" font-size="11" fill="#999" font-family="sans-serif">31</text>
+        <rect x="28" y="262" width="36" height="14" rx="4" fill="#E8671A" opacity="0.08" stroke="#E8671A" stroke-width="0.5" stroke-dasharray="3,2"/>
+        <text x="140" y="290" text-anchor="middle" font-size="10" fill="#E8671A" opacity="0.5" font-family="sans-serif" font-weight="600">- - - bookings that could have been - - -</text>
+      </svg>
+    </div>
+  </div>
+</div>
 
 <!-- PRIVACY MODAL -->
 <div class="legal-overlay" id="privacy-overlay">
