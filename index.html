@@ -290,6 +290,38 @@
     .punch-inner { position: relative; z-index: 2; }
     .punch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 36px; }
 
+
+    /* ── LOSS CALCULATOR ──────────────────── */
+    .calc-block {
+      background: var(--orange-light); border: 1px solid var(--orange-border);
+      border-left: 4px solid var(--orange); border-radius: 14px;
+      padding: 24px 28px; margin-top: 32px; margin-bottom: 36px;
+    }
+    .calc-label { font-size: 12px; font-weight: 700; color: var(--orange); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 20px; display: block; }
+    .calc-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; align-items: start; }
+    .calc-col { padding-right: 28px; border-right: 1px solid var(--orange-border); }
+    .calc-col:nth-child(2) { padding: 0 28px; }
+    .calc-col:nth-child(3) { padding-left: 28px; border-right: none; }
+    .calc-col-label { font-size: 11px; font-weight: 700; color: #888; letter-spacing: 0.5px; text-transform: uppercase; display: block; margin-bottom: 8px; }
+    .calc-input-wrap { display: flex; align-items: baseline; }
+    .calc-symbol { font-size: 26px; font-weight: 800; color: var(--orange); margin-right: 3px; }
+    .calc-input {
+      width: 100%; border: none; background: transparent;
+      font-size: 26px; font-weight: 800; color: var(--black);
+      padding: 4px 0 8px; outline: none; font-family: inherit;
+    }
+    .calc-divider { height: 1px; background: rgba(232,103,26,0.3); margin-top: 8px; margin-bottom: 0; }
+    .calc-sub { font-size: 11px; color: #999; font-weight: 600; }
+    .calc-result { font-size: 26px; font-weight: 800; color: var(--orange); letter-spacing: -1px; line-height: 1; padding-bottom: 8px; }
+    .calc-breakdown { font-size: 11px; font-weight: 600; color: #999; line-height: 1.6; }
+
+    @media (max-width: 960px) {
+      .calc-grid { grid-template-columns: 1fr; gap: 20px; }
+      .calc-col { padding-right: 0; border-right: none; padding-bottom: 16px; }
+      .calc-col:nth-child(2) { padding: 0 0 16px 0; }
+      .calc-col:nth-child(3) { padding-left: 0; padding-bottom: 0; }
+    }
+
     .punch-bad {
       background: #fff; border-radius: 20px; padding: 28px;
       box-shadow: var(--shadow-md); position: relative;
@@ -891,7 +923,37 @@
   <div class="punch-inner">
     <div class="reveal"><span class="sec-eyebrow">The Problem</span></div>
     <h2 class="sec-h2 reveal reveal-delay-1">Your Best Customers Aren't Gone.<br><em>They're Just Waiting To Hear From You.</em></h2>
-    <p class="sec-p reveal reveal-delay-2">Think about the last customer who said "I'll definitely be back." Where are they now? Still meaning to book. Still waiting for a nudge that never came. That's the gap ReBookEasy fills.</p>
+    <p class="sec-p reveal reveal-delay-2" style="max-width:100%;">Think about the last customer who said "I'll definitely be back." Where are they now? Still meaning to book. Still waiting for a nudge that never came. That's the gap ReBookEasy fills.</p>
+
+    <div class="calc-block reveal reveal-delay-3">
+      <span class="calc-label">Calculate Your Annual Loss</span>
+      <div class="calc-grid">
+        <div class="calc-col">
+          <label class="calc-col-label" for="calc-value">Avg Booking Value</label>
+          <div class="calc-input-wrap">
+            <span class="calc-symbol">£</span>
+            <input class="calc-input" type="number" id="calc-value" value="35" min="1" max="10000" />
+          </div>
+          <span class="calc-sub">per visit or booking</span>
+          <div class="calc-divider"></div>
+        </div>
+        <div class="calc-col">
+          <label class="calc-col-label" for="calc-lapsed">Number Of Customers Who Did Not Rebook</label>
+          <div class="calc-input-wrap">
+            <input class="calc-input" type="number" id="calc-lapsed" value="15" min="1" max="10000" />
+          </div>
+          <span class="calc-sub">in the last month</span>
+          <div class="calc-divider"></div>
+        </div>
+        <div class="calc-col">
+          <span class="calc-col-label">You Could Be Losing</span>
+          <div class="calc-result" id="calc-result">£6,300</div>
+          <span class="calc-breakdown" id="calc-breakdown">15 customers × £35 × 12 months</span>
+          <div class="calc-divider"></div>
+        </div>
+      </div>
+    </div>
+
     <div class="punch-grid">
 
       <div class="punch-bad reveal reveal-delay-2">
@@ -1439,6 +1501,20 @@
   document.getElementById('help-btn').addEventListener('click', () => {
     window.open('mailto:hello@rebookeasy.com', '_blank');
   });
+
+  /* ── Loss Calculator ── */
+  function calcLoss() {
+    var value = parseInt(document.getElementById('calc-value').value) || 0;
+    var lapsed = parseInt(document.getElementById('calc-lapsed').value) || 0;
+    var annual = lapsed * value * 12;
+    document.getElementById('calc-result').textContent = '£' + annual.toLocaleString('en-GB');
+    document.getElementById('calc-breakdown').textContent = lapsed + ' customers × £' + value + ' × 12 months';
+  }
+  var calcValue = document.getElementById('calc-value');
+  var calcLapsed = document.getElementById('calc-lapsed');
+  if (calcValue) { calcValue.addEventListener('input', calcLoss); }
+  if (calcLapsed) { calcLapsed.addEventListener('input', calcLoss); }
+  calcLoss();
 
   /* ── Legal modals ── */
   function openLegal(overlayId) {
