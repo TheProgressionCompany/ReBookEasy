@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How Much Are You Losing? — ReBookEasy</title>
+  <meta name="description" content="Calculate how much your service business loses every year to customers who simply forgot to rebook." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23E8671A'/%3E%3Crect x='6' y='7' width='20' height='18' rx='3' fill='none' stroke='white' stroke-width='2'/%3E%3Cpath d='M6 12h20' stroke='white' stroke-width='2'/%3E%3Cpath d='M11 5v4M21 5v4' stroke='white' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+  <style>
+    :root {
+      --orange: #E8671A;
+      --orange-dark: #C4530E;
+      --orange-light: #fff0e6;
+      --orange-border: #fad4bc;
+      --black: #0d0d0d;
+      --white: #ffffff;
+      --gray-1: #fafafa;
+      --gray-3: #ebebeb;
+      --text-2: #555;
+      --text-3: #888;
+      --shadow-orange: 0 4px 24px rgba(232,103,26,0.35);
+      --shadow-lg: 0 20px 56px rgba(0,0,0,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--gray-1);
+      color: var(--black);
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+    }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--orange);
+      padding: 18px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .header-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .header-icon { width: 32px; height: 32px; background: rgba(255,255,255,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .header-name { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.4px; }
+    .header-link { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.85); text-decoration: none; transition: color 0.15s; }
+    .header-link:hover { color: #fff; }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 60px 24px;
+    }
+
+    /* ── INTRO ── */
+    .intro { text-align: center; max-width: 580px; margin-bottom: 48px; }
+    .intro-eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; display: block; }
+    .intro-headline { font-size: clamp(32px, 5vw, 52px); font-weight: 800; color: var(--black); letter-spacing: -2px; line-height: 1.06; margin-bottom: 16px; }
+    .intro-headline em { font-style: normal; color: var(--orange); }
+    .intro-sub { font-size: 17px; color: var(--text-2); line-height: 1.7; }
+
+    /* ── CALCULATOR CARD ── */
+    .calc-card {
+      background: #fff; border-radius: 24px;
+      box-shadow: var(--shadow-lg);
+      width: 100%; max-width: 780px;
+      overflow: hidden;
+    }
+
+    .calc-header {
+      background: var(--orange-light);
+      border-bottom: 1px solid var(--orange-border);
+      padding: 24px 36px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .calc-header-icon { width: 36px; height: 36px; background: var(--orange); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .calc-header-title { font-size: 16px; font-weight: 800; color: var(--orange); letter-spacing: -0.3px; }
+
+    .calc-body { padding: 36px; }
+
+    .calc-grid {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 0; margin-bottom: 32px;
+    }
+
+    .calc-col { padding-right: 28px; border-right: 1px solid var(--orange-border); }
+    .calc-col:nth-child(2) { padding: 0 28px; }
+    .calc-col:last-child { padding-left: 28px; border-right: none; }
+
+    .calc-col-label { font-size: 11px; font-weight: 700; color: #888; letter-spacing: 0.5px; text-transform: uppercase; display: block; margin-bottom: 10px; }
+    .calc-input-wrap { display: flex; align-items: baseline; }
+    .calc-symbol { font-size: 26px; font-weight: 800; color: var(--orange); margin-right: 4px; }
+    .calc-input {
+      width: 100%; border: none; background: transparent;
+      font-size: 26px; font-weight: 800; color: var(--black);
+      padding: 4px 0 8px; outline: none; font-family: inherit;
+    }
+    .calc-input::-webkit-inner-spin-button,
+    .calc-input::-webkit-outer-spin-button { opacity: 0.3; }
+    .calc-divider { height: 1px; background: rgba(232,103,26,0.3); margin: 8px 0; }
+    .calc-sub { font-size: 11px; color: #999; font-weight: 600; }
+
+    /* Result */
+    .calc-result-wrap {
+      background: var(--orange-light); border: 1px solid var(--orange-border);
+      border-radius: 16px; padding: 28px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 24px; flex-wrap: wrap;
+    }
+    .calc-result-left {}
+    .calc-result-label { font-size: 12px; font-weight: 700; color: var(--orange); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; display: block; }
+    .calc-result-number { font-size: clamp(40px, 6vw, 64px); font-weight: 800; color: var(--orange); letter-spacing: -3px; line-height: 1; }
+    .calc-result-breakdown { font-size: 12px; color: #999; font-weight: 600; margin-top: 8px; }
+    .calc-result-right { text-align: right; }
+    .calc-result-context { font-size: 14px; color: var(--text-2); line-height: 1.6; max-width: 240px; }
+    .calc-result-context strong { color: var(--black); font-weight: 800; }
+
+    /* ── CTA ── */
+    .cta-wrap { text-align: center; margin-top: 40px; }
+    .cta-btn {
+      display: inline-block; background: var(--orange); color: #fff;
+      padding: 18px 48px; border-radius: 14px;
+      font-size: 17px; font-weight: 800; font-family: inherit;
+      border: 2.5px solid var(--orange);
+      box-shadow: var(--shadow-orange);
+      text-decoration: none; cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,103,26,0.4); }
+    .cta-note { font-size: 13px; color: var(--text-3); margin-top: 14px; font-weight: 500; }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--orange); padding: 20px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.6); }
+    .footer-link { font-size: 13px; color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.15s; }
+    .footer-link:hover { color: #fff; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .header { padding: 16px 20px; }
+      .main { padding: 40px 16px; }
+      .calc-header { padding: 20px 20px; }
+      .calc-body { padding: 24px 20px; }
+      .calc-grid { grid-template-columns: 1fr; gap: 20px; }
+      .calc-col { padding-right: 0; border-right: none; padding-bottom: 20px; }
+      .calc-col:nth-child(2) { padding: 0 0 20px 0; }
+      .calc-col:last-child { padding-left: 0; border-bottom: none; padding-bottom: 0; }
+      .calc-result-wrap { flex-direction: column; align-items: flex-start; }
+      .calc-result-right { text-align: left; }
+      .footer { padding: 20px; flex-direction: column; align-items: center; text-align: center; }
+    }
+
+    /* ── EXPLAINER ── */
+    .explainer {
+      width: 100%; max-width: 780px; margin-top: 32px;
+    }
+    .explainer-inner {
+      background: #fff; border-radius: 16px;
+      border: 1px solid var(--orange-border);
+      padding: 24px 28px;
+      display: flex; align-items: flex-start; gap: 16px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .explainer-icon {
+      width: 40px; height: 40px; background: var(--orange);
+      border-radius: 10px; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0; margin-top: 2px;
+    }
+    .explainer-title {
+      font-size: 14px; font-weight: 800; color: var(--black);
+      margin-bottom: 8px; letter-spacing: -0.3px;
+    }
+    .explainer-body {
+      font-size: 14px; color: var(--text-2); line-height: 1.7;
+    }
+
+    /* ── SECONDARY CTA ── */
+    .cta-btn-secondary {
+      display: inline-block; background: #fff; color: var(--orange);
+      padding: 16px 48px; border-radius: 14px;
+      font-size: 16px; font-weight: 800; font-family: inherit;
+      border: 2.5px solid var(--orange);
+      text-decoration: none; cursor: pointer; margin-top: 14px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(232,103,26,0.15);
+    }
+    .cta-btn-secondary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,103,26,0.2); }
+
+    @media (max-width: 640px) {
+      .explainer-inner { flex-direction: column; gap: 12px; }
+      .explainer-icon { width: 36px; height: 36px; }
+      .cta-btn-secondary { width: 100%; text-align: center; padding: 16px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  <a href="https://www.rebookeasy.com" class="header-logo">
+    <div class="header-icon">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="17" rx="3" stroke="white" stroke-width="2"/><path d="M3 9h18" stroke="white" stroke-width="2"/><path d="M8 2v4M16 2v4" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    <span class="header-name">ReBookEasy</span>
+  </a>
+  <a href="https://www.rebookeasy.com" class="header-link">Back To Main Site →</a>
+</header>
+
+<main class="main">
+
+  <div class="intro">
+    <span class="intro-eyebrow">The Silent Revenue Killer</span>
+    <h1 class="intro-headline">How Much Are You Losing To Customers Who <em>Forgot To Come Back?</em></h1>
+    <p class="intro-sub">Enter your numbers below and find out exactly how much repeat business you're quietly losing every year.</p>
+  </div>
+
+  <div class="calc-card">
+    <div class="calc-header">
+      <div class="calc-header-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z" fill="white"/></svg>
+      </div>
+      <span class="calc-header-title">Calculate Your Annual Loss</span>
+    </div>
+
+    <div class="calc-body">
+      <div class="calc-grid">
+
+        <div class="calc-col">
+          <label class="calc-col-label" for="calc-value">Avg Booking Value</label>
+          <div class="calc-input-wrap">
+            <span class="calc-symbol">£</span>
+            <input class="calc-input" type="number" id="calc-value" value="35" min="1" max="10000" />
+          </div>
+          <span class="calc-sub">per visit or booking</span>
+          <div class="calc-divider"></div>
+        </div>
+
+        <div class="calc-col">
+          <label class="calc-col-label" for="calc-lapsed">Number Of Customers Who Did Not Rebook</label>
+          <div class="calc-input-wrap">
+            <input class="calc-input" type="number" id="calc-lapsed" value="15" min="1" max="10000" />
+          </div>
+          <span class="calc-sub">in the last month</span>
+          <div class="calc-divider"></div>
+        </div>
+
+        <div class="calc-col">
+          <span class="calc-col-label">You Could Be Losing</span>
+          <div class="calc-result-inline" id="calc-inline">£6,300</div>
+          <span class="calc-sub calc-breakdown-inline" id="calc-breakdown-inline">15 customers × £35 × 12 months</span>
+          <div class="calc-divider"></div>
+        </div>
+
+      </div>
+
+      <div class="calc-result-wrap">
+        <div class="calc-result-left">
+          <span class="calc-result-label">Your Estimated Annual Loss</span>
+          <div class="calc-result-number" id="calc-result">£6,300</div>
+          <div class="calc-result-breakdown" id="calc-breakdown">15 customers × £35 avg booking × 12 months</div>
+        </div>
+        <div class="calc-result-right">
+          <p class="calc-result-context">That's money sitting in your phone contacts, <strong>doing nothing.</strong></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="explainer">
+    <div class="explainer-inner">
+      <div class="explainer-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+      </div>
+      <div class="explainer-text">
+        <div class="explainer-title">What Is ReBookEasy?</div>
+        <p class="explainer-body">ReBookEasy sends automated SMS reminders to your past customers on your schedule. No appointment needed. They reply, they rebook, you get paid. Starts at £35 per month with a 30 day free trial.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-wrap">
+    <a href="#" class="cta-btn">Start Bringing Customers Back, Free</a>
+    <p class="cta-note">30 Day Free Trial, No Credit Card Required</p>
+    <a href="https://www.rebookeasy.com" class="cta-btn-secondary">Learn More →</a>
+  </div>
+
+</main>
+
+<footer class="footer">
+  <span class="footer-copy">© 2026 Vorentoo Ltd. All Rights Reserved.</span>
+  <a href="https://www.rebookeasy.com" class="footer-link">www.rebookeasy.com</a>
+</footer>
+
+<style>
+  .calc-result-inline {
+    font-size: 26px; font-weight: 800; color: var(--orange);
+    letter-spacing: -1px; line-height: 1; padding-bottom: 8px;
+  }
+  .calc-breakdown-inline { font-size: 11px; font-weight: 600; color: #999; }
+</style>
+
+<script>
+  function calc() {
+    var value = parseInt(document.getElementById('calc-value').value) || 0;
+    var lapsed = parseInt(document.getElementById('calc-lapsed').value) || 0;
+    var annual = lapsed * value * 12;
+    var formatted = '£' + annual.toLocaleString('en-GB');
+    var breakdown = lapsed + ' customers × £' + value + ' × 12 months';
+    document.getElementById('calc-result').textContent = formatted;
+    document.getElementById('calc-inline').textContent = formatted;
+    document.getElementById('calc-breakdown').textContent = lapsed + ' customers × £' + value + ' avg booking × 12 months';
+    document.getElementById('calc-breakdown-inline').textContent = breakdown;
+  }
+  document.getElementById('calc-value').addEventListener('input', calc);
+  document.getElementById('calc-lapsed').addEventListener('input', calc);
+  calc();
+</script>
+
+</body>
+</html>
