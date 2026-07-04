@@ -778,6 +778,34 @@
       padding-bottom: 16px; border-bottom: 1px solid var(--gray-3);
     }
 
+
+
+    /* ── SECTION CTAs ─────────────────────── */
+    .sec-cta-wrap { text-align: center; margin-top: 48px; }
+    .sec-cta-note { font-size: 13px; color: var(--text-3); margin-top: 14px; font-weight: 500; }
+    .btn-sec-orange {
+      display: inline-block; background: var(--orange); color: #fff;
+      padding: 18px 40px; border-radius: 14px;
+      font-size: 17px; font-weight: 800;
+      border: 2.5px solid var(--orange);
+      box-shadow: var(--shadow-orange);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer; font-family: inherit;
+    }
+    .btn-sec-orange:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(232,103,26,0.4); }
+    .btn-sec-white {
+      display: inline-block; background: #fff; color: var(--orange);
+      padding: 18px 40px; border-radius: 14px;
+      font-size: 17px; font-weight: 800;
+      border: 2.5px solid #fff;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer; font-family: inherit;
+    }
+    .btn-sec-white:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
+    @media (max-width: 600px) {
+      .btn-sec-orange, .btn-sec-white { width: 100%; text-align: center; padding: 18px 24px; font-size: 16px; }
+    }
     @media (prefers-reduced-motion: reduce) {
       .sms-card-1, .sms-card-2, .sms-card-3, .ticker-track, .h-ring, .f-ring { animation: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
@@ -993,6 +1021,10 @@
 
     </div>
   </div>
+  <div class="sec-cta-wrap reveal">
+    <button class="btn-sec-orange">Start Bringing Customers Back, Free</button>
+    <p class="sec-cta-note">Start your free trial before another customer forgets</p>
+  </div>
 </section>
 
 <!-- HOW IT WORKS -->
@@ -1088,6 +1120,10 @@
 
     </div>
   </div>
+  <div class="sec-cta-wrap reveal">
+    <button class="btn-sec-orange">Start Bringing Customers Back, Free</button>
+    <p class="sec-cta-note">Takes two minutes to set up</p>
+  </div>
 </section>
 
 <!-- DEMO -->
@@ -1150,6 +1186,10 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="sec-cta-wrap reveal">
+    <button class="btn-sec-orange">Start Bringing Customers Back, Free</button>
+    <p class="sec-cta-note">30 Day Free Trial, No Credit Card</p>
   </div>
 </section>
 
@@ -1224,6 +1264,10 @@
       </div>
 
     </div>
+  </div>
+  <div class="sec-cta-wrap reveal">
+    <button class="btn-sec-orange">Start Bringing Customers Back, Free</button>
+    <p class="sec-cta-note">Join them. Start free today</p>
   </div>
 </section>
 
@@ -1351,6 +1395,10 @@
     <div class="faq-right-stat"><div class="faq-right-stat-n">3x</div><div class="faq-right-stat-l">Average increase in repeat bookings</div></div>
     <div class="faq-right-stat"><div class="faq-right-stat-n">30</div><div class="faq-right-stat-l">Day free trial, no card needed</div></div>
   </div>
+  </div>
+  <div class="inner sec-cta-wrap reveal">
+    <button class="btn-sec-orange">Start Bringing Customers Back, Free</button>
+    <p class="sec-cta-note">Still unsure? Try it free for 30 days, no card needed</p>
   </div>
   </div>
 </section>
@@ -1502,6 +1550,8 @@
     window.open('mailto:hello@rebookeasy.com', '_blank');
   });
 
+
+
   /* ── Loss Calculator ── */
   function calcLoss() {
     var value = parseInt(document.getElementById('calc-value').value) || 0;
@@ -1537,6 +1587,8 @@
     if (e.key === 'Escape') { closeLegal('privacy-overlay'); closeLegal('terms-overlay'); }
   });
 </script>
+
+
 
 
 <!-- PRIVACY MODAL -->
