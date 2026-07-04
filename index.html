@@ -1639,8 +1639,8 @@
       document.body.style.overflow = '';
     }
 
-    document.addEventListener('mouseleave', function(e) {
-      if (e.clientY <= 10) showExit();
+    document.documentElement.addEventListener('mouseleave', function(e) {
+      if (!e.relatedTarget && e.clientY <= 10) showExit();
     });
 
     if (exitCta) exitCta.addEventListener('click', function() {
