@@ -1639,7 +1639,13 @@
       document.body.style.overflow = '';
     }
 
+    var scrolled = false;
+    window.addEventListener('scroll', function() {
+      if (window.scrollY > 100) scrolled = true;
+    }, { passive: true });
+
     document.documentElement.addEventListener('mouseleave', function(e) {
+      if (!scrolled) return;
       if (!e.relatedTarget && e.clientY <= 10) showExit();
     });
 
