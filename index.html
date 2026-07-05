@@ -890,6 +890,17 @@
       .trust-bar-pricing { gap: 10px; }
       .trust-pill { padding: 8px 12px; }
     }
+
+    /* ── DEMO FORM ────────────────────────── */
+    .demo-form-wrap {
+      max-width: 600px; margin: 48px auto 0;
+    }
+    .demo-form-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0 40px;
+    }
+    @media (max-width: 600px) {
+      .demo-form-grid { grid-template-columns: 1fr; }
+    }
     @media (prefers-reduced-motion: reduce) {
       .sms-card-1, .sms-card-2, .sms-card-3, .ticker-track, .h-ring, .f-ring { animation: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
@@ -1046,19 +1057,28 @@
   <div class="demo-inner">
     <div class="reveal"><span class="sec-eyebrow">Live Demo</span></div>
     <h2 class="sec-h2 reveal reveal-delay-1">See What Your<br><em>Customers Will Receive</em></h2>
-    <p class="sec-p reveal reveal-delay-2">Fill in your details and tap Send Reminder to see exactly what your customer gets.</p>
+    <p class="sec-p reveal reveal-delay-2">Enter your details below including your real phone number and we will send an actual SMS straight to your device, exactly as your customer would receive it.</p>
 
-    <div class="demo-grid">
-      <div class="reveal reveal-delay-2">
-        <div class="line-field">
-          <label class="line-label" for="biz-name">Your Business Name</label>
-          <input class="line-input" id="biz-name" type="text" placeholder="e.g. Dan's Mobile Barbers" autocomplete="organization" />
+    <div class="demo-form-wrap reveal reveal-delay-2">
+        <div class="demo-form-grid">
+          <div class="line-field">
+            <label class="line-label" for="demo-your-name">Your Name</label>
+            <input class="line-input" id="demo-your-name" type="text" placeholder="e.g. Dan" autocomplete="name" />
+          </div>
+          <div class="line-field">
+            <label class="line-label" for="biz-name">Business Name</label>
+            <input class="line-input" id="biz-name" type="text" placeholder="e.g. Dan's Mobile Barbers" autocomplete="organization" />
+          </div>
+          <div class="line-field">
+            <label class="line-label" for="biz-service">Business Service</label>
+            <input class="line-input" id="biz-service" type="text" placeholder="e.g. Mobile Barber, Nail Tech, Car Valet" autocomplete="off" />
+          </div>
+          <div class="line-field">
+            <label class="line-label" for="your-phone">Your Phone Number</label>
+            <input class="line-input" id="your-phone" type="tel" placeholder="Enter your real number to receive the SMS" autocomplete="tel" />
+          </div>
         </div>
-        <div class="line-field">
-          <label class="line-label" for="cust-name">Customer Name</label>
-          <input class="line-input" id="cust-name" type="text" placeholder="e.g. Sarah" autocomplete="off" />
-        </div>
-        <div class="line-field">
+        <div class="line-field" style="margin-top:8px;">
           <label class="line-label" for="freq">Reminder Frequency</label>
           <div class="line-select-wrap">
             <select class="line-select" id="freq">
@@ -1070,57 +1090,13 @@
             <span class="sel-chev" aria-hidden="true">▾</span>
           </div>
         </div>
-        <button class="demo-submit" id="demo-btn">Send Reminder</button>
-      </div>
-
-      <div class="demo-preview-side reveal reveal-delay-3">
-        <div class="demo-empty" id="demo-empty">
-          <div class="demo-empty-icon">💬</div>
-          <div class="demo-empty-text">Fill in your details<br>and tap <strong>Send Reminder</strong><br>to see the preview.</div>
-        </div>
-        <div class="demo-widget" id="demo-widget">
-          <div class="demo-widget-label">Your Customer Would Receive This</div>
-          <div class="demo-card">
-            <div class="demo-card-hdr">
-              <div class="demo-card-hdr-icon">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-              </div>
-              <span class="demo-card-hdr-name" id="preview-biz">Your Business</span>
-            </div>
-            <div class="demo-card-body">
-              <div class="demo-card-msg" id="preview-msg">Hi Sarah!<br><br>It has been a while since your last visit.<br><br>Ready to book again?</div>
-              <div class="demo-card-cta">Reply YES To Book</div><br>
-              <span class="demo-card-optout">Reply STOP to opt out</span>
-            </div>
-          </div>
-        </div>
-      </div>
+        <button class="demo-submit" id="demo-btn" style="margin-top:16px;">Send Me A Demo SMS</button>
+        <p style="font-size:12px;color:var(--text-3);text-align:center;margin-top:12px;">A real SMS will be sent to your phone. Standard network rates may apply.</p>
     </div>
   </div>
 </section>
 
-<!-- MOBILE SMS PREVIEW POPUP -->
-<div class="sms-modal-overlay" id="sms-modal-overlay">
-  <div class="sms-modal-box" id="sms-modal-box">
-    <div class="sms-modal-close" id="sms-modal-close" role="button" aria-label="Close preview">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#666" stroke-width="2.2" stroke-linecap="round"/></svg>
-    </div>
-    <div class="sms-modal-label">Your Customer Would Receive This</div>
-    <div class="demo-card" style="border-radius: 0; box-shadow: none; margin-top: 16px;">
-      <div class="demo-card-hdr">
-        <div class="demo-card-hdr-icon">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        </div>
-        <span class="demo-card-hdr-name" id="modal-preview-biz">Your Business</span>
-      </div>
-      <div class="demo-card-body">
-        <div class="demo-card-msg" id="modal-preview-msg">Hi Sarah!<br><br>It has been a while since your last visit.<br><br>Ready to book again?</div>
-        <div class="demo-card-cta">Reply YES To Book</div><br>
-        <span class="demo-card-optout">Reply STOP to opt out</span>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 <!-- THE PROBLEM -->
 <section class="punch-sec constrained" aria-labelledby="punch-h2">
@@ -1608,54 +1584,25 @@
     });
   }, { passive: true });
 
-  const freqMap = { week:'every week', '2weeks':'every 2 weeks', month:'every month', '3months':'every 3 months' };
+  /* ── Demo SMS — TextMagic integration to be wired up ── */
   document.getElementById('demo-btn').addEventListener('click', () => {
-    const bizInput  = document.getElementById('biz-name');
-    const custInput = document.getElementById('cust-name');
-    const biz  = bizInput.value.trim();
-    const cust = custInput.value.trim();
-    const freq = document.getElementById('freq').value;
-
-    if (!biz || !cust) {
-      [bizInput, custInput].forEach(input => {
-        if (!input.value.trim()) {
-          input.classList.remove('shake');
-          void input.offsetWidth;
-          input.classList.add('shake');
-        }
-      });
-      (biz ? custInput : bizInput).focus();
-      return;
-    }
-
-    const messageHtml = `Hi ${cust}! 👋<br><br>It has been a while since your last visit.<br><br>Ready to book again?<br><br><span style="font-size:13px;color:#777;">Reminders sent ${freqMap[freq]} · Reply STOP to opt out</span>`;
-
-    if (window.innerWidth <= 900) {
-      document.getElementById('modal-preview-biz').textContent = biz;
-      document.getElementById('modal-preview-msg').innerHTML = messageHtml;
-      const overlay = document.getElementById('sms-modal-overlay');
-      const box = document.getElementById('sms-modal-box');
-      box.classList.remove('wiggle');
-      void box.offsetWidth;
-      box.classList.add('wiggle');
-      overlay.classList.add('open');
-    } else {
-      document.getElementById('preview-biz').textContent = biz;
-      document.getElementById('preview-msg').innerHTML = messageHtml;
-      document.getElementById('demo-empty').style.display = 'none';
-      document.getElementById('demo-widget').classList.add('show');
-    }
-  });
-
-  function closeSmsModal() {
-    document.getElementById('sms-modal-overlay').classList.remove('open');
-  }
-  document.getElementById('sms-modal-close').addEventListener('click', closeSmsModal);
-  document.getElementById('sms-modal-overlay').addEventListener('click', (e) => {
-    if (e.target.id === 'sms-modal-overlay') closeSmsModal();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeSmsModal();
+    const fields = [
+      document.getElementById('demo-your-name'),
+      document.getElementById('biz-name'),
+      document.getElementById('biz-service'),
+      document.getElementById('your-phone')
+    ];
+    let valid = true;
+    fields.forEach(input => {
+      if (!input.value.trim()) {
+        input.classList.remove('shake');
+        void input.offsetWidth;
+        input.classList.add('shake');
+        valid = false;
+      }
+    });
+    if (!valid) return;
+    /* SMS sending logic to be wired up with TextMagic API */
   });
 
   document.getElementById('help-btn').addEventListener('click', () => {
