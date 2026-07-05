@@ -208,7 +208,7 @@
 
     /* ── PROOF ────────────────────────────── */
     .proof { background: #fff; padding: 26px 0 40px; }
-    .proof-divider-wrap { padding: 0 39px; display: flex; justify-content: center; }
+    .proof-divider-wrap { padding: 0 39px 0; display: flex; justify-content: center; margin-bottom: 0; }
     .proof-divider-line { height: 1px; background: var(--gray-3); width: 70%; }
 
     /* Services bar inside proof section */
@@ -283,7 +283,7 @@
     /* ── THE PROBLEM ──────────────────────── */
     .constrained > .punch-inner, .constrained > .how-inner, .constrained > .demo-inner, .constrained > .quotes-inner, .constrained > .pricing-inner { max-width: 1100px; margin: 0 auto; padding: 0 52px; }
     .punch-sec {
-      background: #fff; padding: 80px 52px 80px;
+      background: var(--gray-1); padding: 40px 52px 80px;
       position: relative; overflow: hidden;
     }
     .punch-rings { position: absolute; right: -160px; top: 50%; transform: translateY(-50%); pointer-events: none; z-index: 0; opacity: 0.6; }
@@ -370,7 +370,7 @@
     .pb-out-msg { background: rgba(255,255,255,0.22); border-radius: 16px 16px 4px 16px; padding: 10px 14px; font-size: 13px; font-weight: 700; color: #fff; display: inline-block; max-width: 88%; line-height: 1.5; }
     .pb-reply { background: #34C759; border-radius: 16px 16px 16px 4px; padding: 10px 14px; font-size: 13px; color: #fff; font-weight: 600; display: inline-block; max-width: 88%; }
     /* ── HOW IT WORKS ─────────────────────── */
-    .how-sec { background: var(--gray-1); padding: 80px 52px 80px; position: relative; overflow: hidden; }
+    .how-sec { background: #fff; padding: 80px 52px 80px; position: relative; overflow: hidden; }
     .how-rings { position: absolute; left: -180px; top: 50%; transform: translateY(-50%); pointer-events: none; z-index: 0; opacity: 0.6; }
     .how-inner { position: relative; z-index: 2; }
 
@@ -426,7 +426,7 @@
     .sv-sending-dot { width: 8px; height: 8px; background: #34C759; border-radius: 50%; animation: livepulse 1.5s infinite; }
 
     /* ── DEMO ─────────────────────────────── */
-    .demo-sec { background: #fff; padding: 80px 52px 80px; position: relative; overflow: hidden; }
+    .demo-sec { background: #fff; padding: 40px 52px 40px; position: relative; overflow: hidden; }
     .demo-inner { position: relative; z-index: 2; }
     .demo-rings { position: absolute; right: -200px; bottom: -100px; pointer-events: none; z-index: 0; opacity: 0.5; }
 
@@ -1036,6 +1036,92 @@
   <div class="proof-divider-wrap"><div class="proof-divider-line"></div></div>
 </section>
 
+<!-- DEMO -->
+<section class="demo-sec constrained" id="demo" aria-labelledby="demo-h2">
+  <svg class="demo-rings parallax-bg" data-speed="0.25" width="480" height="480" viewBox="0 0 480 480" fill="none" aria-hidden="true">
+    <circle cx="240" cy="240" r="100" stroke="#E8671A" stroke-opacity="0.07" stroke-width="1.5"/>
+    <circle cx="240" cy="240" r="180" stroke="#E8671A" stroke-opacity="0.055" stroke-width="1.5"/>
+    <circle cx="240" cy="240" r="260" stroke="#E8671A" stroke-opacity="0.04" stroke-width="1.5"/>
+  </svg>
+  <div class="demo-inner">
+    <div class="reveal"><span class="sec-eyebrow">Live Demo</span></div>
+    <h2 class="sec-h2 reveal reveal-delay-1">See What Your<br><em>Customers Will Receive</em></h2>
+    <p class="sec-p reveal reveal-delay-2">Fill in your details and tap Send Reminder to see exactly what your customer gets.</p>
+
+    <div class="demo-grid">
+      <div class="reveal reveal-delay-2">
+        <div class="line-field">
+          <label class="line-label" for="biz-name">Your Business Name</label>
+          <input class="line-input" id="biz-name" type="text" placeholder="e.g. Dan's Mobile Barbers" autocomplete="organization" />
+        </div>
+        <div class="line-field">
+          <label class="line-label" for="cust-name">Customer Name</label>
+          <input class="line-input" id="cust-name" type="text" placeholder="e.g. Sarah" autocomplete="off" />
+        </div>
+        <div class="line-field">
+          <label class="line-label" for="freq">Reminder Frequency</label>
+          <div class="line-select-wrap">
+            <select class="line-select" id="freq">
+              <option value="week">Every Week</option>
+              <option value="2weeks">Every 2 Weeks</option>
+              <option value="month">Every Month</option>
+              <option value="3months">Every 3 Months</option>
+            </select>
+            <span class="sel-chev" aria-hidden="true">▾</span>
+          </div>
+        </div>
+        <button class="demo-submit" id="demo-btn">Send Reminder</button>
+      </div>
+
+      <div class="demo-preview-side reveal reveal-delay-3">
+        <div class="demo-empty" id="demo-empty">
+          <div class="demo-empty-icon">💬</div>
+          <div class="demo-empty-text">Fill in your details<br>and tap <strong>Send Reminder</strong><br>to see the preview.</div>
+        </div>
+        <div class="demo-widget" id="demo-widget">
+          <div class="demo-widget-label">Your Customer Would Receive This</div>
+          <div class="demo-card">
+            <div class="demo-card-hdr">
+              <div class="demo-card-hdr-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+              </div>
+              <span class="demo-card-hdr-name" id="preview-biz">Your Business</span>
+            </div>
+            <div class="demo-card-body">
+              <div class="demo-card-msg" id="preview-msg">Hi Sarah!<br><br>It has been a while since your last visit.<br><br>Ready to book again?</div>
+              <div class="demo-card-cta">Reply YES To Book</div><br>
+              <span class="demo-card-optout">Reply STOP to opt out</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MOBILE SMS PREVIEW POPUP -->
+<div class="sms-modal-overlay" id="sms-modal-overlay">
+  <div class="sms-modal-box" id="sms-modal-box">
+    <div class="sms-modal-close" id="sms-modal-close" role="button" aria-label="Close preview">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#666" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </div>
+    <div class="sms-modal-label">Your Customer Would Receive This</div>
+    <div class="demo-card" style="border-radius: 0; box-shadow: none; margin-top: 16px;">
+      <div class="demo-card-hdr">
+        <div class="demo-card-hdr-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </div>
+        <span class="demo-card-hdr-name" id="modal-preview-biz">Your Business</span>
+      </div>
+      <div class="demo-card-body">
+        <div class="demo-card-msg" id="modal-preview-msg">Hi Sarah!<br><br>It has been a while since your last visit.<br><br>Ready to book again?</div>
+        <div class="demo-card-cta">Reply YES To Book</div><br>
+        <span class="demo-card-optout">Reply STOP to opt out</span>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- THE PROBLEM -->
 <section class="punch-sec constrained" aria-labelledby="punch-h2">
   <svg class="punch-rings parallax-bg" data-speed="0.3" width="560" height="560" viewBox="0 0 560 560" fill="none" aria-hidden="true">
@@ -1220,96 +1306,6 @@
     <p class="sec-cta-note">Takes two minutes to set up</p>
   </div>
 </section>
-
-<!-- DEMO -->
-<section class="demo-sec constrained" id="demo" aria-labelledby="demo-h2">
-  <svg class="demo-rings parallax-bg" data-speed="0.25" width="480" height="480" viewBox="0 0 480 480" fill="none" aria-hidden="true">
-    <circle cx="240" cy="240" r="100" stroke="#E8671A" stroke-opacity="0.07" stroke-width="1.5"/>
-    <circle cx="240" cy="240" r="180" stroke="#E8671A" stroke-opacity="0.055" stroke-width="1.5"/>
-    <circle cx="240" cy="240" r="260" stroke="#E8671A" stroke-opacity="0.04" stroke-width="1.5"/>
-  </svg>
-  <div class="demo-inner">
-    <div class="reveal"><span class="sec-eyebrow">Live Demo</span></div>
-    <h2 class="sec-h2 reveal reveal-delay-1">See What Your<br><em>Customers Receive</em></h2>
-    <p class="sec-p reveal reveal-delay-2">Fill in your details and tap Send Reminder to see exactly what your customer gets.</p>
-
-    <div class="demo-grid">
-      <div class="reveal reveal-delay-2">
-        <div class="line-field">
-          <label class="line-label" for="biz-name">Your Business Name</label>
-          <input class="line-input" id="biz-name" type="text" placeholder="e.g. Dan's Mobile Barbers" autocomplete="organization" />
-        </div>
-        <div class="line-field">
-          <label class="line-label" for="cust-name">Customer Name</label>
-          <input class="line-input" id="cust-name" type="text" placeholder="e.g. Sarah" autocomplete="off" />
-        </div>
-        <div class="line-field">
-          <label class="line-label" for="freq">Reminder Frequency</label>
-          <div class="line-select-wrap">
-            <select class="line-select" id="freq">
-              <option value="week">Every Week</option>
-              <option value="2weeks">Every 2 Weeks</option>
-              <option value="month">Every Month</option>
-              <option value="3months">Every 3 Months</option>
-            </select>
-            <span class="sel-chev" aria-hidden="true">▾</span>
-          </div>
-        </div>
-        <button class="demo-submit" id="demo-btn">Send Reminder</button>
-      </div>
-
-      <div class="demo-preview-side reveal reveal-delay-3">
-        <div class="demo-empty" id="demo-empty">
-          <div class="demo-empty-icon">💬</div>
-          <div class="demo-empty-text">Fill in your details<br>and tap <strong>Send Reminder</strong><br>to see the preview.</div>
-        </div>
-        <div class="demo-widget" id="demo-widget">
-          <div class="demo-widget-label">Your Customer Would Receive This</div>
-          <div class="demo-card">
-            <div class="demo-card-hdr">
-              <div class="demo-card-hdr-icon">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-              </div>
-              <span class="demo-card-hdr-name" id="preview-biz">Your Business</span>
-            </div>
-            <div class="demo-card-body">
-              <div class="demo-card-msg" id="preview-msg">Hi Sarah!<br><br>It has been a while since your last visit.<br><br>Ready to book again?</div>
-              <div class="demo-card-cta">Reply YES To Book</div><br>
-              <span class="demo-card-optout">Reply STOP to opt out</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="sec-cta-wrap reveal">
-    <button class="btn-sec-orange">Start Bringing Customers Back, Free</button>
-    <p class="sec-cta-note">30 Day Free Trial, No Credit Card</p>
-  </div>
-</section>
-
-<!-- MOBILE SMS PREVIEW POPUP -->
-<div class="sms-modal-overlay" id="sms-modal-overlay">
-  <div class="sms-modal-box" id="sms-modal-box">
-    <div class="sms-modal-close" id="sms-modal-close" role="button" aria-label="Close preview">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 6l12 12M18 6L6 18" stroke="#666" stroke-width="2.2" stroke-linecap="round"/></svg>
-    </div>
-    <div class="sms-modal-label">Your Customer Would Receive This</div>
-    <div class="demo-card" style="border-radius: 0; box-shadow: none; margin-top: 16px;">
-      <div class="demo-card-hdr">
-        <div class="demo-card-hdr-icon">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        </div>
-        <span class="demo-card-hdr-name" id="modal-preview-biz">Your Business</span>
-      </div>
-      <div class="demo-card-body">
-        <div class="demo-card-msg" id="modal-preview-msg">Hi Sarah!<br><br>It has been a while since your last visit.<br><br>Ready to book again?</div>
-        <div class="demo-card-cta">Reply YES To Book</div><br>
-        <span class="demo-card-optout">Reply STOP to opt out</span>
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- REAL PEOPLE -->
 <section class="quotes-sec constrained" aria-labelledby="quotes-h2">
