@@ -938,6 +938,8 @@
       .reveal { opacity: 1; transform: none; transition: none; }
     }
   </style>
+  <!-- Tidio Chat -->
+  <script src="//code.tidio.co/ubayk52hmlcdldgyyhlexx4wmmyebidx.js" async></script>
 </head>
 <body>
 
@@ -1319,7 +1321,7 @@
     <circle cx="240" cy="240" r="260" stroke="#E8671A" stroke-opacity="0.04" stroke-width="1.5"/>
   </svg>
   <div class="features-inner">
-    <div class="reveal"><span class="sec-eyebrow">The Product</span></div>
+    <div class="reveal"><span class="sec-eyebrow">What You Get</span></div>
     <h2 class="sec-h2 reveal reveal-delay-1" id="features-h2">Everything You <em>Need.</em></h2>
     <p class="sec-p reveal reveal-delay-2">Six features built around one goal, bringing your customers back without the hassle.</p>
     <div class="features-grid">
@@ -1337,7 +1339,7 @@
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="#E8671A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="#E8671A" stroke-width="2"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="#E8671A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="feature-tile-title">Customer List</div>
-        <div class="feature-tile-body">See all your customers and their reminder status at a glance. Always know who is due a nudge.</div>
+        <div class="feature-tile-body">See all your customers and their reminder status at a glance. Know exactly who is active and who is paused.</div>
       </div>
 
       <div class="feature-tile reveal reveal-delay-3">
@@ -1743,7 +1745,11 @@
   });
 
   document.getElementById('help-btn').addEventListener('click', () => {
-    window.open('mailto:hello@rebookeasy.com', '_blank');
+    if (window.tidioChatApi) {
+      window.tidioChatApi.open();
+    } else {
+      window.open('mailto:hello@rebookeasy.com', '_blank');
+    }
   });
 
 
