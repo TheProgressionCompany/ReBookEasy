@@ -666,8 +666,7 @@
     .footer-links a:hover { color: #fff; }
 
     /* ── HELP ─────────────────────────────── */
-    .help-btn { position: fixed; bottom: 28px; right: 28px; width: 56px; height: 56px; background: var(--orange); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 24px rgba(232,103,26,0.5); z-index: 50; border: none; transition: transform 0.2s, box-shadow 0.2s; }
-    .help-btn:hover { transform: scale(1.1); box-shadow: 0 6px 32px rgba(232,103,26,0.6); }
+
 
     /* ── PARALLAX ─────────────────────────── */
     .parallax-bg { will-change: transform; }
@@ -1635,9 +1634,7 @@
 </footer>
 
 <!-- HELP -->
-<button class="help-btn" id="help-btn" aria-label="Chat with us">
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-</button>
+
 
 <script>
   const nav = document.getElementById('nav');
@@ -1744,13 +1741,7 @@
     }
   });
 
-  document.getElementById('help-btn').addEventListener('click', () => {
-    if (window.tidioChatApi) {
-      window.tidioChatApi.open();
-    } else {
-      window.open('mailto:hello@rebookeasy.com', '_blank');
-    }
-  });
+
 
 
 
