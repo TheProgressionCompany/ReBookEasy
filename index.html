@@ -1620,7 +1620,9 @@
         btn.textContent = '✓ SMS Sent! Check Your Phone';
         btn.style.background = '#34C759';
         btn.style.borderColor = '#34C759';
-        // Reset after 5 seconds
+        // Clear fields
+        [yourNameInput, bizNameInput, yourPhoneInput].forEach(input => input.value = '');
+        // Reset button after 5 seconds
         setTimeout(() => {
           btn.textContent = 'Send Me A Demo SMS';
           btn.style.background = '';
