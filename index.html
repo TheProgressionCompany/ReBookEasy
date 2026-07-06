@@ -1070,10 +1070,6 @@
             <input class="line-input" id="biz-name" type="text" placeholder="e.g. Dan's Mobile Barbers" autocomplete="organization" />
           </div>
           <div class="line-field">
-            <label class="line-label" for="biz-service">Business Service</label>
-            <input class="line-input" id="biz-service" type="text" placeholder="e.g. Mobile Barber, Nail Tech, Car Valet" autocomplete="off" />
-          </div>
-          <div class="line-field">
             <label class="line-label" for="your-phone">Your Phone Number</label>
             <input class="line-input" id="your-phone" type="tel" placeholder="Enter your real number to receive the SMS" autocomplete="tel" />
           </div>
@@ -1584,14 +1580,14 @@
     });
   }, { passive: true });
 
-  /* ── Demo SMS — TextMagic integration to be wired up ── */
-  document.getElementById('demo-btn').addEventListener('click', () => {
-    const fields = [
-      document.getElementById('demo-your-name'),
-      document.getElementById('biz-name'),
-      document.getElementById('biz-service'),
-      document.getElementById('your-phone')
-    ];
+  /* ── Demo SMS — TextMagic integration ── */
+  document.getElementById('demo-btn').addEventListener('click', async () => {
+    const yourNameInput = document.getElementById('demo-your-name');
+    const bizNameInput  = document.getElementById('biz-name');
+    const yourPhoneInput = document.getElementById('your-phone');
+    const btn = document.getElementById('demo-btn');
+
+    const fields = [yourNameInput, bizNameInput, yourPhoneInput];
     let valid = true;
     fields.forEach(input => {
       if (!input.value.trim()) {
@@ -1602,7 +1598,45 @@
       }
     });
     if (!valid) return;
-    /* SMS sending logic to be wired up with TextMagic API */
+
+    // Show loading state
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    try {
+      const response = await fetch('/api/send-sms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          yourName: yourNameInput.value.trim(),
+          bizName: bizNameInput.value.trim(),
+          yourPhone: yourPhoneInput.value.trim()
+        })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        btn.textContent = '✓ SMS Sent! Check Your Phone';
+        btn.style.background = '#34C759';
+        btn.style.borderColor = '#34C759';
+        // Reset after 5 seconds
+        setTimeout(() => {
+          btn.textContent = 'Send Me A Demo SMS';
+          btn.style.background = '';
+          btn.style.borderColor = '';
+          btn.disabled = false;
+        }, 5000);
+      } else {
+        btn.textContent = 'Send Me A Demo SMS';
+        btn.disabled = false;
+        alert(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      btn.textContent = 'Send Me A Demo SMS';
+      btn.disabled = false;
+      alert('Something went wrong. Please try again.');
+    }
   });
 
   document.getElementById('help-btn').addEventListener('click', () => {
