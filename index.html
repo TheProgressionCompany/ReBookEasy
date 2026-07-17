@@ -262,9 +262,11 @@
 
     /* ── TICKER ───────────────────────────── */
     .ticker-outer { background: var(--orange-dark); padding: 14px 0; overflow: hidden; }
-    .ticker-track { display: flex; gap: 0; animation: ticker 16s linear infinite; white-space: nowrap; }
-    @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
-    .ticker-item { display: inline-flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.85); padding: 0 32px; white-space: nowrap; }
+    .ticker-track { display: flex; gap: 0; white-space: nowrap; will-change: transform; }
+    .ticker-item { display: inline-flex; align-items: center; gap: 10px; font-size: 18px; font-weight: 600; color: rgba(255,255,255,0.85); padding: 0 32px; white-space: nowrap; flex-shrink: 0; }
+    @media (max-width: 600px) {
+      .ticker-item { font-size: 14px; padding: 0 20px; gap: 8px; }
+    }
     .t-dot { width: 5px; height: 5px; background: rgba(255,255,255,0.5); border-radius: 50%; flex-shrink: 0; }
 
     /* ── PROOF ────────────────────────────── */
@@ -750,7 +752,6 @@
       .demo-preview-side { min-height: auto; }
       .quotes-grid { grid-template-columns: 1fr; margin-top: 32px; }
       .plans { grid-template-columns: 1fr; max-width: 420px; margin-left: auto; margin-right: auto; margin-top: 32px; }
-      .ticker-track { animation: ticker 20s linear infinite !important; }
       .ticker-item { padding: 0 20px; gap: 8px; }
       .inner { padding: 0 28px; }
       .proof-grid { padding: 0 28px; }
@@ -769,7 +770,6 @@
       .quote-frag-author { font-size: 12px; margin-top: 12px; }
       .quote-divider-wrap { padding: 0 24px; margin-bottom: 24px; }
       .quote-divider-line { width: 60%; margin-top: 28px; }
-      .ticker-track { animation: ticker 24s linear infinite !important; }
       .ticker-item { padding: 0 18px; gap: 8px; }
       .punch-sec, .how-sec, .demo-sec, .quotes-sec, .pricing-sec, .faq-sec { padding: 64px 24px; }
       .final-cta { padding: 64px 24px; }
@@ -1111,13 +1111,6 @@
 <!-- TICKER -->
 <div class="ticker-outer" role="marquee" aria-label="Live rebooking activity">
   <div class="ticker-track">
-    <span class="ticker-item"><span class="t-dot"></span>James just rebooked his barber</span>
-    <span class="ticker-item"><span class="t-dot"></span>Sophie confirmed her nail appointment</span>
-    <span class="ticker-item"><span class="t-dot"></span>Oliver rebooked a car valet</span>
-    <span class="ticker-item"><span class="t-dot"></span>3 customers returned to Emma's salon today</span>
-    <span class="ticker-item"><span class="t-dot"></span>Charlotte messaged back within the hour</span>
-    <span class="ticker-item"><span class="t-dot"></span>William's personal trainer got a new booking</span>
-    <span class="ticker-item"><span class="t-dot"></span>Garry's carpet cleaning business saw 3 returns this week</span>
     <span class="ticker-item"><span class="t-dot"></span>James just rebooked his barber</span>
     <span class="ticker-item"><span class="t-dot"></span>Sophie confirmed her nail appointment</span>
     <span class="ticker-item"><span class="t-dot"></span>Oliver rebooked a car valet</span>
@@ -1716,6 +1709,42 @@
 
 
 <script>
+  /* ── Ticker ── */
+  (function() {
+    var track = document.querySelector('.ticker-track');
+    if (!track) return;
+
+    var items = Array.from(track.querySelectorAll('.ticker-item'));
+    items.forEach(function(item) {
+      track.appendChild(item.cloneNode(true));
+    });
+
+    var position = 0;
+    var originalWidth = 0;
+
+    function calcWidth() {
+      var allItems = track.querySelectorAll('.ticker-item');
+      var half = Math.floor(allItems.length / 2);
+      originalWidth = 0;
+      for (var i = 0; i < half; i++) {
+        originalWidth += allItems[i].offsetWidth;
+      }
+    }
+
+    function animate() {
+      position -= 0.5;
+      if (Math.abs(position) >= originalWidth) position = 0;
+      track.style.transform = 'translateX(' + position + 'px)';
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('load', function() {
+      calcWidth();
+      requestAnimationFrame(animate);
+    });
+    window.addEventListener('resize', calcWidth);
+  })();
+
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 20);
