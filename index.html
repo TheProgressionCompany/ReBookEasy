@@ -1730,6 +1730,116 @@
 
 
 <script>
+  /* ── GA4 Event Tracking ── */
+  function trackEvent(eventName, params) {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', eventName, params);
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+
+    // Hero CTA
+    var heroCta = document.querySelector('.btn-hero-main');
+    if (heroCta) heroCta.addEventListener('click', function() {
+      trackEvent('cta_click', { button_name: 'hero_start_free', section: 'hero' });
+    });
+
+    // Hero ghost button
+    var heroGhost = document.querySelector('.btn-hero-ghost');
+    if (heroGhost) heroGhost.addEventListener('click', function() {
+      trackEvent('cta_click', { button_name: 'hero_see_how_it_works', section: 'hero' });
+    });
+
+    // Nav Log In
+    var navCta = document.querySelector('.nav-cta');
+    if (navCta) navCta.addEventListener('click', function() {
+      trackEvent('cta_click', { button_name: 'nav_login', section: 'navigation' });
+    });
+
+    // Demo form submission
+    var demoBtn = document.getElementById('demo-btn');
+    if (demoBtn) demoBtn.addEventListener('click', function() {
+      trackEvent('demo_sms_submitted', {
+        business_name: document.getElementById('biz-name').value,
+        section: 'demo'
+      });
+    });
+
+    // Section CTAs
+    document.querySelectorAll('.btn-sec-orange').forEach(function(btn, index) {
+      btn.addEventListener('click', function() {
+        trackEvent('cta_click', { button_name: 'section_cta_' + index, section: btn.closest('section') ? btn.closest('section').id || 'unknown' : 'unknown' });
+      });
+    });
+
+    // Pricing plan buttons
+    document.querySelectorAll('.plan-btn').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var planName = btn.closest('.plan').querySelector('.plan-tier').textContent;
+        trackEvent('pricing_click', { plan_name: planName, section: 'pricing' });
+      });
+    });
+
+    // Final CTA
+    var finalBtn = document.querySelector('.final-btn');
+    if (finalBtn) finalBtn.addEventListener('click', function() {
+      trackEvent('cta_click', { button_name: 'final_cta', section: 'final' });
+    });
+
+    // Exit intent CTA
+    var exitCta = document.getElementById('exit-cta');
+    if (exitCta) exitCta.addEventListener('click', function() {
+      trackEvent('cta_click', { button_name: 'exit_intent_cta', section: 'exit_intent' });
+    });
+
+    // Exit intent shown
+    var exitShownFired = false;
+    document.documentElement.addEventListener('mouseleave', function() {
+      if (!exitShownFired) {
+        exitShownFired = true;
+        trackEvent('exit_intent_shown', { section: 'exit_intent' });
+      }
+    });
+
+    // FAQ interactions
+    document.querySelectorAll('details.faq-item').forEach(function(item) {
+      item.addEventListener('toggle', function() {
+        if (item.open) {
+          var question = item.querySelector('summary').textContent.trim();
+          trackEvent('faq_opened', { question: question, section: 'faq' });
+        }
+      });
+    });
+
+    // Calculator interactions
+    var calcValue = document.getElementById('calc-value');
+    var calcLapsed = document.getElementById('calc-lapsed');
+    var calcInteracted = false;
+    function trackCalcInteraction() {
+      if (!calcInteracted) {
+        calcInteracted = true;
+        trackEvent('calculator_used', { section: 'problem' });
+      }
+    }
+    if (calcValue) calcValue.addEventListener('input', trackCalcInteraction);
+    if (calcLapsed) calcLapsed.addEventListener('input', trackCalcInteraction);
+
+    // Scroll depth tracking
+    var scrollDepths = [25, 50, 75, 100];
+    var firedDepths = [];
+    window.addEventListener('scroll', function() {
+      var scrollPercent = Math.round((window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 100);
+      scrollDepths.forEach(function(depth) {
+        if (scrollPercent >= depth && firedDepths.indexOf(depth) === -1) {
+          firedDepths.push(depth);
+          trackEvent('scroll_depth', { depth: depth + '%', page: 'landing_page' });
+        }
+      });
+    }, { passive: true });
+
+  });
+
   /* ── Ticker ── */
   (function() {
     var track = document.querySelector('.ticker-track');
