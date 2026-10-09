@@ -156,7 +156,7 @@
     .quote-frag-text .qmark { color: var(--orange); font-weight: 800; font-style: normal; font-family: Georgia, serif; font-size: 1.3em; }
     .quote-frag-author { display: block; font-size: 13px; color: #999; font-style: normal; font-weight: 600; margin-top: 14px; letter-spacing: 0.2px; }
     .quote-frag-author strong { color: #666; font-weight: 800; }
-    .proof-grid { max-width: 1100px; margin: 0 auto; padding: 0 52px; display: grid; grid-template-columns: repeat(4,1fr); }
+    .proof-grid { max-width: 1100px; margin: 0 auto; padding: 0 52px; display: none; /* HIDDEN: change back to "display: grid" to show the stats bar again */ grid-template-columns: repeat(4,1fr); }
     .proof-item { text-align: center; padding: 30px 28px; position: relative; }
     .proof-item::after { content: ''; position: absolute; top: 50%; right: 0; transform: translateY(-50%); width: 2px; height: 70%; background: var(--orange); }
     .proof-item:last-child::after { display: none; }
