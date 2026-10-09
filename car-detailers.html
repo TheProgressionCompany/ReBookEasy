@@ -162,6 +162,8 @@
     .proof-item:last-child::after { display: none; }
     .proof-n { font-size: clamp(44px,5vw,68px); font-weight: 800; color: var(--orange); letter-spacing: -3px; line-height: 1; margin-bottom: 10px; }
     .proof-l { font-size: 14px; color: var(--text-3); font-weight: 500; }
+    /* HIDDEN ITEMS: remove the "is-hidden" class from an element in the HTML to show it again */
+    .is-hidden { display: none !important; }
 
     .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.7s ease, transform 0.7s ease; }
     .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -1164,7 +1166,7 @@
   <div class="faq-right reveal reveal-delay-2">
     <div class="faq-right-title">No appointment needed. Ever.</div>
     <div class="faq-right-body">Unlike every other reminder tool, ReBookEasy reaches out to your past customers without needing a booking in the diary first. That is the whole point.</div>
-    <div class="faq-right-stat"><div class="faq-right-stat-n">500+</div><div class="faq-right-stat-l">Service businesses trusting ReBookEasy</div></div>
+    <div class="faq-right-stat is-hidden"><div class="faq-right-stat-n">500+</div><div class="faq-right-stat-l">Service businesses trusting ReBookEasy</div></div>
     <div class="faq-right-stat"><div class="faq-right-stat-n">3x</div><div class="faq-right-stat-l">Average increase in repeat bookings</div></div>
     <div class="faq-right-stat"><div class="faq-right-stat-n">30</div><div class="faq-right-stat-l">Day free trial, no card needed</div></div>
   </div>
@@ -1198,7 +1200,7 @@
     <h2 class="final-headline" id="final-h2">Don't Let Your Customers<br><span>Slip Away.</span><br>Bring Them Back Automatically.</h2>
     <div class="final-sub">30 Day Free Trial. Takes Two Minutes To Set Up.</div>
     <a href="https://yourdigitalneeds.fillout.com/t/jUzXRogJ55us" class="final-btn">Join Waiting List</a>
-    <div class="final-note">Join 500+ service businesses already using ReBookEasy</div>
+    <div class="final-note is-hidden">Join 500+ service businesses already using ReBookEasy</div>
   </div>
 </section>
 
